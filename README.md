@@ -54,7 +54,7 @@ Findings:
 - Conclusion: The number of tags does not significantly affect views.
 ### 4. Does publishing time influence engagement?
 - Method: Extracted day of the week & time of day from publishedAt.
-```
+```python
 df["day_of_week"] = df["publishedAt"].dt.day_name()
 df["publishedAt"] = pd.to_datetime(df["publishedAt"])
 
@@ -82,14 +82,14 @@ print(df.groupby("time_of_day")["viewCount"].count())
 - Identified the video with the highest views.
 - Factors analyzed: Likes, comments, publish time, duration.
 
-```
+```python
 most_popular_video = df.loc[df["viewCount"].idxmax()]
 print(most_popular_video[["video_id", "title", "viewCount", "likeCount", "commentCount", "publishedAt", "duration"]])
 ```
 ### 6. Does title length affect video views ?
 - Correlation between title length & views: 0.003 (no impact).
 - Conclusion: Title length does not influence video popularity.
-```
+```python
 df["title_length"] = df["title"].str.len()
 print(df.corr(numeric_only=True))
 ```
@@ -100,7 +100,7 @@ print(df.corr(numeric_only=True))
 - High (100K-1M): 2,105 videos
 - Medium (10K-100K): 1,745 videos
 - Low (<10K): 52 videos
-```
+```python
 df["view_category"] = pd.cut(
   df["viewCount"], bins=[0, 10000, 100000, 1000000, 10000000],
   labels=["Low (<10K)", "Medium (10K-100K)", "High (100K-1M)", "Viral (>1M)"],category_counts = df["view_category"].value_counts()
@@ -120,7 +120,7 @@ plt.show()
 ### 8. Are certain topics/themes consistently performing better?
 - Method: Extracted & analyzed most common tags.
 - Findings: Identified top-performing video themes based on average views.
-```
+```python
 from collections import Counter
 import numpy as np
 
@@ -155,7 +155,7 @@ plt.show()
 
 ### 10. What is the frequency of video publishing?
 - Method: Monthly analysis of publishedAt.
-```
+```python
 df["published_month"] = df["publishedAt"].dt.to_period("M")
 
 df["published_month"].value_counts().sort_index().plot(kind="bar", color="purple", figsize=(40, 6))
@@ -168,7 +168,7 @@ plt.show()
 ### 11. What are the most used keywords in video tags?
 - Extracted top keywords from the tags column.
 - Top keywords: Netflix, Netflix India, Trailer, Comedy, Bollywood.
-```
+```python
 from collections import Counter
 import itertools
 
